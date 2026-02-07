@@ -5,11 +5,16 @@ sealed class WeatherblocState {}
 
 final class WeatherblocInitial extends WeatherblocState {}
 
-final class WeatherFailed extends WeatherblocState {}
+final class WeatherFailed extends WeatherblocState {
+  final String errormessage;
+
+  WeatherFailed(this.errormessage);
+}
 
 final class WeatherSuccess extends WeatherblocState {
-  final Weathermodel weatherdata;
-  WeatherSuccess(this.weatherdata);
+  final List<Weathermodel> weatherdata;
+  final Weathermodel currentweather;
+  WeatherSuccess({required this.weatherdata, required this.currentweather});
 }
 
 

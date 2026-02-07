@@ -3,6 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weatherapp/core/secrets.dart';
 
+//data source means only one thing
+//get the data
+//generally what all libraries you use the
+//data format will be same there fore dont convert here to model
+//format our class has only one functionality that is fetch the data from db
+//data this returns always a map or json ie raw data
 abstract interface class IWeatherDs {
   Future<Map<String, dynamic>> getCurrentWeather();
 }

@@ -10,16 +10,30 @@ part 'weatherbloc_state.dart';
 
 class WeatherblocBloc extends Bloc<WeatherblocEvent, WeatherblocState> {
   final IWeatherRepository _repository;
+
+  void fetchweatherdata(
+    WeatherFetchDataEvent event,
+    Emitter<WeatherblocState> emit,
+  ) async {
+    emit(WeatherblocInitial());
+    var weatherdata = await _repository.getWeatherdata(event.cityname);
+    if (weatherdata == null) {
+      emit(WeatherFailed("Fetching Failed"));
+    } else if (weatherdata.isEmpty) {
+      emit(WeatherFailed("No data available"));
+    } else {
+      final currentdata = weatherdata[0];
+      int size = weatherdata.length;
+      weatherdata = weatherdata.skip(0).take(size - 1).toList();
+      emit(
+        WeatherSuccess(currentweather: currentdata, weatherdata: weatherdata),
+      );
+    }
+  }
+
   WeatherblocBloc(IWeatherRepository repository)
     : _repository = repository,
       super(WeatherblocInitial()) {
-    on<WeatherFetchDataEvent>((event, emit) async {
-      final weatherdata = await _repository.getWeatherdata(event.cityname);
-      if (weatherdata == null) {
-        emit(WeatherFailed());
-      } else {
-        emit(WeatherSuccess(weatherdata));
-      }
-    });
+    on<WeatherFetchDataEvent>((event, emit) => fetchweatherdata(event, emit));
   }
 }

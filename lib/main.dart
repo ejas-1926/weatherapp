@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp/weatherfeature/bloc/weatherbloc_bloc.dart';
 import 'package:weatherapp/weatherfeature/businesslogic/weather_repository.dart';
 import 'package:weatherapp/weatherfeature/data/weatherds.dart';
+import 'package:weatherapp/weatherfeature/presentation/pages/weatherscreen.dart';
 
 void main() {
   runApp(Weatherapp());
@@ -21,7 +22,7 @@ class Weatherapp extends StatelessWidget {
           },
         ),
       ],
-      child: MaterialApp(),
+      child: MaterialApp(home: WeatherScreen()),
     );
   }
 }
